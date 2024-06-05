@@ -1,0 +1,33 @@
+{% extends 'cars/base.html' %}
+{% block content %}
+<h1>Your orders</h1>
+<div style="margin: 50px 0;">
+        <table style="width: 100%;">
+            {% for order in orders %}
+                <tr>
+                    <td style="padding: 10px;">Car: <a href="{% url 'car_detail' order.car.id %}">{{ order.car }}</a></td>
+                    <td style="padding: 10px;">Price: {{ order.car.price }}$</td>
+                    <td style="padding: 10px;">Seller: {{ order.employee.user.first_name }} {{ order.employee.user.last_name }}</td>
+                    <td style="padding: 10px;">Quantity: {{ order.quantity }}</td>
+                    <td><img style="height:100px; margin: 10px;" src="{{order.car.photo.url}}"></td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px;">
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            <input type="hidden" name="order_id" value="{{ order.id }}">
+                            <input type="submit" value="Delete" style="padding: 5px 10px;">
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <h3>Total price: {{ total_price }}$</h3>
+        <form method="post">
+            {% csrf_token %}
+        <div>Input promocode if you want</div>
+        <input type="text" name="code">
+        <input type="submit" value="Complete Order" name="complete_order">  
+        </form>  
+</div>
+{% endblock %}

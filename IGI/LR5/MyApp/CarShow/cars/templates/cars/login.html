@@ -1,0 +1,23 @@
+{% extends 'cars/base.html' %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <div>
+        <h2>Log in account</h2>
+        <p>Username:</p>
+        {{ form.username }}
+        <p>Password:</p>
+        {{ form.password }}
+        <p>Confirm password:</p>
+        {{ form.passwordConfirm }}
+        <div>
+            {% for i in error %}
+                <p>{{ i }}</p>
+            {% endfor %}
+        </div>
+        
+        <button type="submit">Confirm</button>
+        <p>Don't have an account? Create it <a href="/registry">Here</a></p>
+    </div>
+</form>
+{% endblock %}

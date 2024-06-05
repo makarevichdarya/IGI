@@ -1,0 +1,9 @@
+{% extends 'cars/base.html' %}
+{% block content %}
+<h1>{{ car.name }}</h1>
+    <img style="height:200px; margin: 10px;" src="{{car.photo.url}}">
+    <p>Type: {{ car.type }}</p>
+    <p>Manufacturer: {{ car.manufacturer }}</p>
+    <p>Characteristics: {{ car.characteristics }}</p>
+    <p style="background-color: cornflowerblue;">Price: {{ car.price }}</p>
+{% endblock %}

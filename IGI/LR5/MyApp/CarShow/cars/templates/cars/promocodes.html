@@ -1,0 +1,21 @@
+{% extends 'cars/base.html' %}
+{% block content %}
+<h1>Vacanсies</h1>
+    <ul>
+        {%for item in promocodes%}
+        <div class = "promocodes">
+            <div>
+                <h2>{{item.name}}</h2>
+                <p><div>{{item.description}}</p></div>
+                <div>{{item.code}}</div>
+                {% if item.is_active == True %}
+                    <div style="color: green;">ACTIVE</div>
+                {% else %}
+                    <div style="color: red;">NOT ACTIVE</div>
+                {% endif %}
+                <p></p>
+            </div>
+        </div>
+        {%endfor%}
+    </ul>
+{% endblock %}

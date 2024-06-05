@@ -1,0 +1,16 @@
+{% extends 'cars/base.html' %}
+{% block content %}
+<h1>Vacanсies</h1>
+    <ul>
+        {%for item in vacancies%}
+        <div class = "vacncies">
+            <div>
+                <h2>{{item.name}}</h2>
+                <h3>{{item.title}}</h3>
+                <small>{{item.description}}</small>
+                <p></p>
+            </div>
+        </div>
+        {%endfor%}
+    </ul>
+{% endblock %}

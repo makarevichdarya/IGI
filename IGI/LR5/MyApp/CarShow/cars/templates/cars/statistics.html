@@ -1,0 +1,75 @@
+{% extends 'cars/base.html' %}
+{% block content %}
+<table width="100%" border="1" cellspacing="0" cellpadding ="10">
+    <tr> 
+        <form method="post">
+            {% csrf_token %}
+            <td style="text-align: left;">Clients<input type="radio" name="type" value="clients"></td>
+            <td style="text-align: left;">Cars<input type="radio" name="type" value="cars"></td>
+            <td style="text-align: left;">Clear<input type="radio" name="type" value="clear"></td>
+            <td><input type="submit" value="Show"></td>
+        </form> 
+    </tr>
+</table>
+{% if type == 'stat' %}
+    <h2>Statistics:</h2>
+    <p>Total sales amount: {{ total_price }}$</p>
+    <p>Total sales quantity: {{total_quantity}} cars</p>
+    <p>Mean total price in orders: {{mean_price}}$</p>
+    <p>Mean age of clients: {{mean_age}} years</p>
+    <p>Most popular car type: {{mode_type}}</p>
+    <p>Most profit car type: {{profit_type}}</p>
+    {{ car_type_table | safe }}
+    <p>Most profit car: {{profit_car}}</p>
+    <p>Least profit car: {{less_profit_car}}</p>
+    <img src="data:image/png; base64,{{ month_chart }}" alt="Sales Chart">
+    <img src="data:image/png; base64,{{ year_chart }}" alt="Sales Chart">
+    <img src="data:image/png; base64,{{ region_chart }}" alt="Customers Region Chart">
+{% endif %}
+{% if type == 'client' %}
+    <table style="border: 1; width: 100%;">
+    <tr style="text-align: center;">
+        <td style="text-align: center;">
+            <h2>Clients (from A to Z):</h2>
+            {% for client in clients%}
+            <p><div>
+                <div>Username: {{ client.user }}</div>
+                <div>Name: {{ client.user.first_name }} {{ client.user.last_name }}</div>
+                <div>Email: {{ client.user.email }}</div>
+                <div>Phone number: {{ client.phone_number }}</div>
+                <div>Region: {{ client.time_zone }}</div>
+            </div></p>
+            {% endfor %}
+        </td>
+        <td>
+            <h2>Clients by Regions:</h2>
+            {% for region, region_clients in grouped_clients%}
+            <p><div>
+                <h4>Region: {{ region }}</h4>
+                {% for cl in region_clients %}
+                <p><div>
+                    <div>Username: {{ cl.user }}</div>
+                    <div>Name: {{ cl.user.first_name }} {{ cl.user.last_name }}</div>
+                    <div>Email: {{ cl.user.email }}</div>
+                    <div>Phone number: {{ cl.phone_number }}</div>
+                </div></p>
+                {% endfor %}
+            </div></p>
+            {% endfor %}
+        </td>
+    </tr>
+    </table>
+{% endif %}
+{% if type == 'car' %}
+<h2>Cars by types:</h2>
+    {% for car in cars %}
+    <p><div>
+        <div>Type: {{ car.type }}</div>
+        <div>Name: {{ car.name }}</div>
+        <div>Manufacturer: {{ car.manufacturer }}</div>
+        <div>Price: {{ car.price }}$</div>
+        <div><img style="height:100px; margin: 10px;" src="{{car.photo.url}}"></div>
+    </div></p>
+    {% endfor %}
+{% endif %}
+{% endblock %}
