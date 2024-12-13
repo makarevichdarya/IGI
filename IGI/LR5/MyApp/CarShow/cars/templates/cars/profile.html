@@ -1,0 +1,89 @@
+{% extends 'cars/base.html' %}
+{% block content %}
+    {%if type == 'e' %}
+        <h1>Employee Page</h1>
+        <h2>Info:</h2>
+        <figure >
+            <img style="width:150px; height: 150px;" src="{{employee.photo.url}}" alt="" />
+            <figcaption>
+                <ul >
+                    <li>{{employee.user.first_name}} {{employee.user.last_name}}</li>
+                    <li>{{employee.position}}</li>
+                    <li>{{employee.user.email}}</li>
+                    <li>{{employee.phone_number}}</li>
+                    <li>Gender: {{gender}}</li>
+                </ul>
+            </figcaption>
+        </figure>
+        <h2>Active orders:</h2>
+        <table>
+            {% for order in orders %}
+                <tr>
+                    <td><img style="height:100px; margin: 10px;" src="{{order.car.photo.url}}"></td>
+                    <td style="padding: 10px;">Car: {{ order.car }}</td>
+                    <td style="padding: 10px;">Price: {{ order.car.price }}$</td>
+                    <td style="padding: 10px;">Quantity: {{ order.quantity }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <h2>Complete orders:</h2>
+        <table>
+            {% for comp_ord in complete_orders %}
+                <tr>
+                    <td><img style="height:100px; margin: 10px;" src="{{comp_ord.order.car.photo.url}}"></td>
+                    <td style="padding: 10px;">Car: {{ comp_ord.order.car }}</td>
+                    <td style="padding: 10px;">Price: {{ comp_ord.total_price }}$</td>
+                    <td style="padding: 10px;">Date of delivery: {{comp_ord.date_delivery}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    {% if type == 'c'%}
+    {% load tz %}
+        <p>{{customer.time_zone}}      
+            {% timezone customer.time_zone %}
+                {{tz_time|date:"d/m/Y H:i"}}
+            {% endtimezone %}
+        </p>
+        <h1>Customer Page</h1>
+        <h2>Info:</h2>
+        <figure >
+            <figcaption>
+                <ul >
+                    <li>{{customer.user.first_name}} {{customer.user.last_name}}</li>
+                    <li>{{customer.user.email}}</li>
+                    <li>{{customer.phone_number}}</li>
+                    <li>Gender: {{gender}}</li>
+                </ul>
+            </figcaption>
+        </figure>
+        <h2>Your payed orders:</h2>
+        <table>
+            {% for comp_ord in complete_orders %}
+                <tr>
+                    <td><img style="height:100px; margin: 10px;" src="{{comp_ord.order.car.photo.url}}"></td>
+                    <td style="padding: 10px;">Car: <a href="{% url 'car_detail' comp_ord.order.car.id %}">{{ comp_ord.order.car }}</a></td>
+                    <td style="padding: 10px;">Price: {{ comp_ord.total_price }}$</td>
+                    <td style="padding: 10px;">Date of delivery: {{comp_ord.date_delivery}}</td>
+                    <td style="padding: 10px;">Seller: {{ comp_ord.order.employee.user.first_name }} {{comp_ord.order.employee.user.last_name}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    {% if type == 'a'%}
+    <h1>Admin Page</h1>
+    <h2>Info:</h2>
+        <figure >
+            <figcaption>
+                <ul >
+                    <li>{{admin.first_name}} {{admin.last_name}}</li>
+                    <li>{{admin.email}}</li>
+                    <li>Gender: {{gender}}</li>
+                </ul>
+            </figcaption>
+        </figure>
+    <h2>Admin tools:</h2>
+    <p><a href="/statistics">Statisctics</a></p>
+    <p><a href='#'>Diagrams</a></p>
+    {% endif %}
+{% endblock %}

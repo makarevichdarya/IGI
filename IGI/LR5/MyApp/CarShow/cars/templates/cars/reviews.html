@@ -1,0 +1,22 @@
+{% extends 'cars/base.html' %}
+{% block content %}
+<h1>Reviews:</h1>
+{%for item in reviews%}
+    <p><div>
+        <div>{{item.text}}</div>
+        <div>Rate: {{item.rate}} ★</div>
+        <small>{{item.author}}, {{item.date}}</small>
+    </div></p>
+{%endfor%}
+{% if type == 'c' %}
+    <form method="post">
+        {% csrf_token %}
+        <h3>Leave your review:</h3>
+        <input type="text" name="text" style="padding: 5px 10px;">
+        <input type="number"min="1" max="5" step="1" name="rate" style="padding: 5px 10px;">
+        <input type="submit" name="Add Review" style="padding: 5px 10px;">
+    </form>
+{% else %}
+    <div>Want to leave review?<a href="/login">Log in.</a></div>
+{% endif %}
+{% endblock %}

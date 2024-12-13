@@ -1,0 +1,16 @@
+{% extends 'cars/base.html' %}
+{% block content %}
+<h1>News</h1>
+    <ul>
+        {%for item in news%}
+            <div class = "news">
+                <div>
+                    <h3>{{item.title}}</h3>
+                    <img style="height:100px; margin: 10px;" src="{{item.photo.url}}" >
+                    <div>{{item.text}}</div>
+                    <span class = "newsDate"><small>Published on: {{item.date}}</small></span>
+                </div>
+            </div>
+        {%endfor%}
+    </ul>
+{% endblock %}

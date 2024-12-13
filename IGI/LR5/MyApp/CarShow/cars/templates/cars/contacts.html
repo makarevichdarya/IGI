@@ -1,0 +1,17 @@
+{% extends 'cars/base.html' %}
+{% block content %}
+<h1>Contacts</h1>
+    {%for employee in contacts%}
+    <figure >
+        <img style="width:150px; height: 150px;" src="{{employee.photo.url}}" alt="" />
+        <figcaption>
+            <ul >
+                <li>{{employee.user.first_name}} {{employee.user.last_name}}</li>
+                <li>{{employee.position}}</li>
+                <li>{{employee.user.email}}</li>
+                <li>{{employee.phone_number}}</li>
+            </ul>
+        </figcaption>
+    </figure>
+    {%endfor%}
+{% endblock %}

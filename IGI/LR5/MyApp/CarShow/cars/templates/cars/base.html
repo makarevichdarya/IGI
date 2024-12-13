@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <table width="100%" border="1" cellpadding="10" cellspacing="0">
+        <tr bgcolor="#483d8b" style="color: white; text-align: center;">
+            <td><a href="{% url 'index' %}" style="color: white; text-decoration: none;">Home</a></td>
+            <td><a href="/about" style="color: white; text-decoration: none;">About</a></td>
+            <td><a href="/news" style="color: white; text-decoration: none;">News</a></td>
+            <td><a href="/cars" style="color: white; text-decoration: none;">Cars</a></td>
+            <td><a href="/contacts" style="color: white; text-decoration: none;">Contacts</a></td>
+            <td><a href="/faq" style="color: white; text-decoration: none;">FAQ</a></td>
+            <td><a href="/review" style="color: white; text-decoration: none;">Reviews</a></td>
+            <td><a href="/privacypolicy" style="color: white; text-decoration: none;">Privacy Policy</a></td>
+            <td><a href="/promocode" style="color: white; text-decoration: none;">Promocodes</a></td>
+            <td><a href="/vacancy" style="color: white; text-decoration: none;">Vacancy</a></td>
+        </tr>
+    </table>
+    <table width="100%" border ="1" cellspacing="0" cellpadding ="10">
+        <tr bgcolor="white" text-align: left;> 
+            <td style="color: white; padding: 10; text-align: center;"><a href="/profile">Profile</a></td>
+            <td style="color: white; padding: 10; text-align: center;"><a href="/cart">Cart</a></td>
+            <td style="color: white; padding: 10; text-align: center;">
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <input type="submit" value="Logout">
+                </form>
+            {% else %}
+                <a href="/login">Log In</a>
+            {% endif %}
+            </td>  
+        </tr>
+    </table>
+    <div>
+        {% block content %}
+
+        {% endblock %}
+    </div>
+</body>
+</html>
